@@ -2,7 +2,7 @@ import React from 'react';
 import LoginPage from './Components/LoginPage';
 import styled from 'styled-components';
 import RegisterPage from './Components/RegisterPage';
-
+import Router from './router'
 
 const AppContainer = styled.div`
   display: flex;
@@ -14,8 +14,7 @@ const AppContainer = styled.div`
 function App() {
   return (
     <AppContainer >
-     <LoginPage/>
-     <RegisterPage/>
+      <Router />
     </AppContainer>
   );
 }
