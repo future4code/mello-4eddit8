@@ -19,7 +19,7 @@ function Router() {
         <Route exact path='/timeline'>
           <PostsPage />
         </Route>
-        <Route exact path="/Post:id" render={(child) => <CommentPage {...child} />}>
+        <Route exact path="/Post/:id" render={(child) => <CommentPage {...child} />}>
         </Route>
         <Route path='/'>
           <h3>Ops! Essa página não existe</h3>
