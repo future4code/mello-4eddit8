@@ -1,7 +1,11 @@
 import React from 'react'
 import {
   Main,
-  CardContainer
+  CardContainer,
+  ThumbUpIcon,
+  ThumbDownIcon,
+  UserContainer,
+  TextContainer
 } from './style'
 
 function PostsCard(props) {
@@ -9,12 +13,23 @@ function PostsCard(props) {
   return(
     <Main>
       <CardContainer>
-        <h4>{props.user}</h4>
-        <p>{props.text}</p>
-        <div>
-          <p>{props.votesCount}</p>
-          <p>{props.commentsCount}</p>
-        </div>
+        <UserContainer>
+          <h4>{props.user}</h4>
+        </UserContainer>
+        <TextContainer>
+          <p>{props.text}</p>
+        </TextContainer>
+        <section>
+          <div>
+            <ThumbUpIcon onClick={props.upVote} color='primary' />
+            <span>{props.votesCount}</span>
+            <ThumbDownIcon onClick={props.downVote} color='primary' />
+          </div>
+          <div>
+            <span>comentários:</span>
+            <span>{props.commentsCount}</span>
+          </div>
+        </section>
       </CardContainer>
     </Main>
   )

@@ -35,9 +35,9 @@ function LoginPage() {
     axios
       .post(baseUrl, body)
       .then((response) => {
-        //window.localStorage.setItem("token", response.data.token);
-        //setEmail("")
-        //setPassword("")
+        window.localStorage.setItem("token", response.data.token);
+        setEmail("")
+        setPassword("")
         alert("Usuário logado");
       })
 
