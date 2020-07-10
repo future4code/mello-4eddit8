@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
-import { Button, TextField,  } from "@material-ui/core";
-import { LoginForm, ButtonRegister, Container } from "./styled";
+import { Button, TextField, Avatar,  } from "@material-ui/core";
+import { LoginForm, ButtonRegister, useStyles} from "./styled";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const baseUrl =
   "https://us-central1-labenu-apis.cloudfunctions.net/labEddit/login";
 
 function LoginPage() {
-
+  const classes = useStyles()
   let history = useHistory()
 
   const [email, setEmail] = useState("");
@@ -48,9 +50,13 @@ function LoginPage() {
 
   return (
     <Container>
-
-      <Typography variant="h3" align={"center"} gutterBottom>
-        Login
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+      <Typography variant="h4" align={"center"} gutterBottom>
+      LabEddit
       </Typography>
       
       <LoginForm onSubmit={onSubmitLogin}>
@@ -60,6 +66,10 @@ function LoginPage() {
           name={"email"}
           label={"Email"}
           type={"email"}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
         />
         <TextField
           onChange={onChangePassword}
@@ -67,22 +77,27 @@ function LoginPage() {
           name={"password"}
           label={"Senha"}
           type={"password"}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
         />
-        <Button variant={"contained"} color="primary" type={"submit"}>
-          Entrar
+        <Button variant={"contained"} className={classes.submit} fullWidth color="primary" type={"submit"}>
+        Entrar
         </Button>
       </LoginForm>
-      
+     
       <ButtonRegister>
         <Link to={"/register"} >
-          <Button variant={"outlined"} color="" type={"submit"}>
-          Quero me cadastar
+          <Button variant={"outlined"} className={classes.register} fullWidth color="secondary" type={"submit"}>
+          Criar conta
           </Button>
         </Link>
       </ButtonRegister>
-
+      </div>
     </Container>
   );
 }
 
 export default LoginPage;
+
