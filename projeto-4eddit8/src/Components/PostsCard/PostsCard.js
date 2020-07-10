@@ -16,7 +16,7 @@ function PostsCard(props) {
         <UserContainer>
           <h4>{props.user}</h4>
         </UserContainer>
-        <TextContainer>
+        <TextContainer onClick={props.onClickPost}>
           <p>{props.text}</p>
         </TextContainer>
         <section>
