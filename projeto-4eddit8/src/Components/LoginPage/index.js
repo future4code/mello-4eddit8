@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
-import { Button, TextField } from "@material-ui/core";
-import { LoginForm } from "./styled";
+import { Button, TextField,  } from "@material-ui/core";
+import { LoginForm, ButtonRegister, Container } from "./styled";
 import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
 
-const Container = styled.div`
-  display: grid;
-  gap: 8px;
-`;
 
 const baseUrl =
   "https://us-central1-labenu-apis.cloudfunctions.net/labEddit/login";
 
 function LoginPage() {
+
+  let history = useHistory()
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,6 +35,7 @@ function LoginPage() {
       .post(baseUrl, body)
       .then((response) => {
         window.localStorage.setItem("token", response.data.token);
+        history.push('/timeline')
         setEmail("")
         setPassword("")
         alert("Usuário logado");
@@ -48,9 +48,11 @@ function LoginPage() {
 
   return (
     <Container>
+
       <Typography variant="h3" align={"center"} gutterBottom>
         Login
       </Typography>
+      
       <LoginForm onSubmit={onSubmitLogin}>
         <TextField
           onChange={onChangeEmail}
@@ -59,7 +61,6 @@ function LoginPage() {
           label={"Email"}
           type={"email"}
         />
-
         <TextField
           onChange={onChangePassword}
           value={password}
@@ -67,15 +68,19 @@ function LoginPage() {
           label={"Senha"}
           type={"password"}
         />
-
         <Button variant={"contained"} color="primary" type={"submit"}>
           Entrar
         </Button>
       </LoginForm>
+      
+      <ButtonRegister>
+        <Link to={"/register"} >
+          <Button variant={"outlined"} color="" type={"submit"}>
+          Quero me cadastar
+          </Button>
+        </Link>
+      </ButtonRegister>
 
-      <Button variant={"outlined"} color="" type={"submit"}>
-        Cadastrar
-      </Button>
     </Container>
   );
 }

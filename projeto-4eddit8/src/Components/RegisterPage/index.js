@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { Button, TextField } from "@material-ui/core";
 import { RegisterForm } from "./styled";
 import axios from "axios";
+import {useHistory} from 'react-router-dom';
 
 const Container = styled.div`
   display: grid;
@@ -13,9 +14,13 @@ const Container = styled.div`
 const baseUrl = "https://us-central1-labenu-apis.cloudfunctions.net/labEddit/signup";
 
 function RegisterPage() {
+
+  let history = useHistory()
+
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -41,10 +46,11 @@ function RegisterPage() {
       .post(baseUrl, body)
       .then((response) => {
         alert("Usuário cadastrado");
-        //window.localStorage.setItem("token", response.data.token);
-        //setUserName("")
-        //setEmail("")
-        //setPassword("")
+        window.localStorage.setItem("token", response.data.token);
+        history.push('/timeline')
+        setUserName("")
+        setEmail("")
+        setPassword("")
         console.log(response.data);
       })
       .catch((error) => {
