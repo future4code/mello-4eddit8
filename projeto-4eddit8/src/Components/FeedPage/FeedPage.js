@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Form from './Form'
 import { StylesProvider } from '@material-ui/core/styles';
 import PostsCard from '../PostsCard/PostsCard'
 import {useProtectedPage} from '../../Hooks/useProtectedPage'
@@ -13,7 +14,6 @@ import {
 
 function PostsPage() {
   const [postList, setPostList] = useState([])
-  const [newPostInput, setNewPostInput] = useState('')
   const [vote, setVote] = useState(true)
 
   const history = useHistory()
@@ -29,24 +29,9 @@ function PostsPage() {
     history.push('/')
   }
 
-  function onClickNewPost(event) {
-    event.preventDefault()
-    const headers = {
-      Authorization: localStorage.getItem("token")
-    }
-    const body = {
-      text: newPostInput,
-      title: 'um post qualquer'
-    }
-    console.log(body)
-    axios.post('https://us-central1-labenu-apis.cloudfunctions.net/labEddit/posts', body, {headers})
-      .then((response) => {
-        alert('post criado com sucesso')
-        setNewPostInput('')
-      })
-      .catch((error) => {
-        alert(error)
-      })
+  function onClickPost(id) {
+    console.log(id)
+    history.push('/Post/' + id)
   }
 
   function getPosts() {
@@ -61,10 +46,6 @@ function PostsPage() {
       .catch((error) => {
         userToken && alert(error)
       })
-  }
-
-  function onChangeNewPostInput(event) {
-    setNewPostInput(event.target.value)
   }
 
   function postVote(postId, direction) {
@@ -92,27 +73,12 @@ function PostsPage() {
           onClick={onClickLogOut}>
           Logout
         </LogOutButton>
-        <form onSubmit={onClickNewPost}>
-          <InputNewPost 
-            type='text'
-            value={newPostInput}
-            placeholder='quais as novidades?' 
-            variant='outlined' 
-            multiline
-            rows={3}
-            onChange={onChangeNewPostInput}
-          />
-          <ButtonNewPost
-            type='submit'
-            color='primary' 
-            variant='outlined'>
-            Postar
-          </ButtonNewPost>
-        </form>
+        <Form />
         {postList.length === 0 ? <p>Carregando Posts...</p> : postList.map((post) => {
           return (
           <section key={post.id}>
-            <PostsCard 
+            <PostsCard
+              onClickPost={() => onClickPost(post.id)} 
               upVote={() => postVote(post.id, +1)}
               downVote={() => postVote(post.id, -1)}
               user={post.username}

@@ -23,6 +23,7 @@ export const TextContainer = styled.div`
   }
   background-color: whitesmoke;
   width: inherit;
+  cursor: pointer;
 `
 export const Main = styled.main`
   display: flex;
