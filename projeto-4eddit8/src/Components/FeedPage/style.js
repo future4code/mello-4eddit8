@@ -22,3 +22,9 @@ export const InputNewPost = styled(TextField)`
 export const ButtonNewPost = styled(Button)`
   margin-top: 8px;
 `
+export const LogOutButton = styled(Button)`
+  position: absolute;
+  left: 16px;
+  color: red;
+  text-transform: lowercase;
+`
