@@ -1,26 +1,22 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
-import { Button, TextField } from "@material-ui/core";
-import { RegisterForm } from "./styled";
+import { Button, TextField, Avatar } from "@material-ui/core";
+import { RegisterForm, Container, useStyles, Login } from "./styled";
 import axios from "axios";
-import {useHistory} from 'react-router-dom';
+import { useHistory, Link } from "react-router-dom";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
-const Container = styled.div`
-  display: grid;
-  gap: 8px;
-`;
-
-const baseUrl = "https://us-central1-labenu-apis.cloudfunctions.net/labEddit/signup";
+const baseUrl =
+  "https://us-central1-labenu-apis.cloudfunctions.net/labEddit/signup";
 
 function RegisterPage() {
-
-  let history = useHistory()
+  const classes = useStyles();
+  let history = useHistory();
 
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -47,45 +43,79 @@ function RegisterPage() {
       .then((response) => {
         alert("Usuário cadastrado");
         window.localStorage.setItem("token", response.data.token);
-        history.push('/timeline')
-        setUserName("")
-        setEmail("")
-        setPassword("")
+        history.push("/timeline");
+        setUserName("");
+        setEmail("");
+        setPassword("");
         console.log(response.data);
       })
       .catch((error) => {
-        alert("Usuário não foi cadastrado")
+        alert("Usuário não foi cadastrado");
       });
   };
 
   return (
     <Container>
-      <Typography variant="h3" align={"center"} gutterBottom>
-        Cadastro
-      </Typography>
-      <RegisterForm onSubmit={createdUser}>
-        <TextField
-        onChange={onChangeUserName}
-        value={username}
-        name={"username"} 
-        label={"Nome do usuário"} type={"text"} />
-        <TextField 
-         onChange={onChangeEmail}
-         value={email}
-         name={"email"}
-         label={"Email"} type={"email"} />
-        <TextField 
-        onChange={onChangePassword}
-        value={password}
-        name={"password"}
-        label={"Senha"} type={"password"} />
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography variant="h4" align={"center"} gutterBottom>
+        Cadastre-se
+        </Typography>
+        <RegisterForm onSubmit={createdUser}>
+          <TextField
+            onChange={onChangeUserName}
+            value={username}
+            name={"username"}
+            label={"Nome do usuário"}
+            type={"text"}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+          />
+          <TextField
+            onChange={onChangeEmail}
+            value={email}
+            name={"email"}
+            label={"Email"}
+            type={"email"}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+          />
+          <TextField
+            onChange={onChangePassword}
+            value={password}
+            name={"password"}
+            label={"Senha"}
+            type={"password"}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+          />
+          <Button
+            variant={"contained"}
+            className={classes.submit}
+            color="primary"
+            type={"submit"}
+          >
+           Cadastrar
+          </Button>
+        </RegisterForm>
 
-        <Button variant={"contained"} color="primary" type={"submit"}>
-          Cadastrar
-        </Button>
-      </RegisterForm>
+        <Login>
+          Já tem uma conta?
+          <Link to={"/"}>Entrar</Link>
+        </Login>
+      </div>
     </Container>
   );
 }
 
 export default RegisterPage;
+
